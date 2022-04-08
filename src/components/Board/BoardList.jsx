@@ -1,8 +1,8 @@
 import {BoardHeader} from "./BoardHeader";
 import {createTheme, Divider, Paper, Grid, Typography} from "@mui/material";
-import {TaskList} from "./TaskList";
+import {TaskList} from "../Task/TaskList";
 import {BoardFooter} from "./BoardFooter";
-import React from "react";
+import React, {useState} from "react";
 import {Draggable, Droppable} from "react-beautiful-dnd";
 import {makeStyles} from "@mui/styles";
 
@@ -30,7 +30,7 @@ const useStyles = makeStyles(() => ({
         marginRight: "0.5rem",
         borderRadius: " 5px",
     },
-    cardcontainer: {
+    listContainer: {
         overflowX: 'auto',
         overflowY: "hidden",
         margin: '0.5rem 0'
@@ -38,11 +38,12 @@ const useStyles = makeStyles(() => ({
 }))
 
 export const BoardList = ({board, index}) => {
+    const [boardList, setBoardList] = useState(board);
     const classes = useStyles();
 
     return (
 
-        <Draggable draggableId={'dragId' + board.id} index={index}>
+        <Draggable draggableId={board.title+ "/" + board.id} index={index}>
             {(provided) => (
                 <div {...provided.draggableProps} ref={provided.innerRef}>
                     <div className={classes.listTasks} {...provided.dragHandleProps}>
@@ -54,11 +55,11 @@ export const BoardList = ({board, index}) => {
                                     <Grid
                                         ref={provided.innerRef}
                                         {...provided.droppableProps}
-                                        className={classes.cardcontainer}
+                                        className={classes.listContainer}
                                     >
                                         {
                                             board.tasks.length > 0 ?
-                                        <TaskList board={board}/>
+                                        <TaskList tasks={board.tasks} boardId={board.id}/>
                                                 :
                                                 <Typography variant='h6' style={{paddingLeft:"10px"}}>
                                                     Nothing in the List

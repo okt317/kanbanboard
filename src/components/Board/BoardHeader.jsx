@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {Button, createTheme, Grid, Input, TextField, Typography} from "@mui/material";
 import {makeStyles} from "@mui/styles";
 import {MoreVert} from "@mui/icons-material";
-import {useStore} from "../useStore";
+import {useStore} from "../../store/useStore";
 
 const theme = createTheme();
 const useStyles = makeStyles(() => ({
@@ -25,15 +25,13 @@ export const BoardHeader = ({board}) => {
         mobxStore.remove(board.id)
     }
     const updateTitle = () => {
-        if (newTitle.length > 0 && newTitle.length < 31) {
-
+        if (newTitle.trim.length > 0) {
             mobxStore.updateTitle(newTitle, board.id)
             setUpdateOpen(!updateOpen)
         } else {
-
+            alert('최소 1자 이상')
         }
     }
-
     const updateCancel = () => {
         setNewTitle(board.title)
         setUpdateOpen(!updateOpen)

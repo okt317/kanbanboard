@@ -1,6 +1,6 @@
 import {CssBaseline, Grid} from "@mui/material";
-import {MainPage} from "./MainPage";
-import {Header} from "./components/Header";
+import {MainPage} from "./components/Main/MainPage";
+import {Header} from "./components/NavBar/Header";
 import {makeStyles} from "@mui/styles";
 
 const useStyles = makeStyles((theme) => ({

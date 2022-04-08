@@ -1,13 +1,12 @@
 import React, {useState} from "react";
 import {Card, CardContent, Grid, Typography, createTheme, Button, TextField} from "@mui/material";
 import {makeStyles} from "@mui/styles";
-import clsx from 'clsx'
 import {DeleteOutline} from "@mui/icons-material"
-import {useStore} from "../useStore";
+import {useStore} from "../../store/useStore";
 
 const theme = createTheme();
 const useStyles = makeStyles(() => ({
-    cardRoot: {
+    root: {
         margin: theme.spacing(2),
         marginBottom: 20,
     },
@@ -30,16 +29,20 @@ const useStyles = makeStyles(() => ({
 
 export const Task = ({task, boardId, index}) => {
     const {mobxStore} = useStore();
-    const [value, setValue] = useState()
+    const [newDate, setNewDate] = useState(task.start)
     const classes = useStyles()
 
     const remove = () => {
         mobxStore.remove(boardId, index)
     }
+    const updateDate = (e) => {
+        setNewDate(e.target.value)
+        mobxStore.updateDate(newDate, boardId)
+    }
 
     return (
         <Card
-            className={clsx(classes.cardRoot)}
+            className={classes.root}
             variant="outlined"
         >
             <div className={classes.details}>
@@ -51,8 +54,11 @@ export const Task = ({task, boardId, index}) => {
 
                     </Grid>
                     <Grid item xs={12} className={classes.bottomBox}>
-                        <Typography variant='body2'>{task.start}</Typography>
-                        <TextField type='date' value={task.start}/>
+                        {/*<Typography variant='body2'>{task.start}</Typography>*/}
+                        <TextField type='date'
+                                   value={newDate}
+                                   onChange={updateDate}
+                        />
                         <Button onClick={remove}>
                             <DeleteOutline/>
                         </Button>
