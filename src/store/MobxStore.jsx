@@ -28,13 +28,16 @@ const mobxStore = makeAutoObservable({
             "start": startDate,
             "comment": ""
         })
-        const index = this.listOrder.indexOf(parseInt(boardId))
+        const index = this.listOrder.indexOf(boardId)
         this.boards.splice(index, 1, targetBoard)
         console.log(this.boards)
     },
     addList(text) {
         console.log(text)
-        const maxId = Math.max(...this.boards.map(board => board.id))
+        let maxId = Math.max(...this.boards.map(board => board.id))
+        if (!isFinite(maxId)) {
+            maxId = 0
+        }
         this.boards.push({
             "id": maxId + 1,
             "title": text,

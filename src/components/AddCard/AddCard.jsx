@@ -40,7 +40,7 @@ export const AddCard = ({handleClose, id}) => {
                     ),
                 }}
             />
-            <Button color="primary" onClick={id === 'new' ? addList : addTask}>Add</Button>
+            <Button color="primary" onClick={typeof id === 'string' ? addList : addTask}>Add</Button>
             <Button color="error" onClick={() => handleClose(false)}>Cancel</Button>
         </Grid>
     )
